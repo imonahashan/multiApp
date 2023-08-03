@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+    {% block title %}
+        audio recorder
+    {% endblock %}
+
+    {% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <h1>Audio Recorder</h1>
+                <button id="recordButton">Record</button>
+                <button id="stopButton" disabled>Stop</button>
+                <br>
+                <audio id="audioPlayer" controls></audio>
+            </div>
+            <div class="col-sm-3"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands"></script>
+    <script>
+        let recorder;
+        let audioPlayer = document.getElementById("audioPlayer");
+        let recordButton = document.getElementById("recordButton");
+        let stopButton = document.getElementById("stopButton");
+
+        recordButton.addEventListener("click", startRecording);
+        stopButton.addEventListener("click", stopRecording);
+
+        async function startRecording() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const options = { mimeType: 'audio/webm' };
+            recorder = new MediaRecorder(stream, options);
+            const audioChunks = [];
+
+            recorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
+
+            recorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayer.src = audioUrl;
+            };
+
+            recorder.start();
+            recordButton.disabled = true;
+            stopButton.disabled = false;
+        }
+
+        function stopRecording() {
+            if (recorder.state !== 'inactive') {
+                recorder.stop();
+                recordButton.disabled = false;
+                stopButton.disabled = true;
+            }
+        }
+    </script>
+
+
+    {% endblock%}

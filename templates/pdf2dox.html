@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+    {% block title %}
+        pdf2dox
+    {% endblock %}
+
+    {% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <h2 class="container d-flex justify-content-center">PDF to Word Converter</h2>
+                    <div class="col-md-4 justify-center"></div>
+                    <div class="col-md-4">
+                        <div style="height:10px"></div>
+                        <form method="POST" enctype="multipart/form-data" action="/pdf_convert">
+                            <input class="form-control" type="file" name="pdf_file" >
+                            <button id="speaker" class="btn btn-warning" type="submit"><i class="fa-solid fa-money-bill-transfer"></i></i></button>
+                            <!--<input type="submit" value="Convert">-->
+                        </form>
+                    </div>
+                    <div class="col-md-4"></div>
+            </div>
+            <div class="col-sm-3"></div>
+      </div>
+    </div>
+
+
+
+
+    {% endblock%}

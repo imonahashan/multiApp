@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+  {% block title%}
+    About
+  {% endblock %}
+
+  {% block body %}
+    <h1>Skills</h1>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">SL#</th>
+            <th scope="col">Skil Name</th>
+            <th scope="col">Points</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in skills %}
+          <tr>
+            <th scope="row">{{a.id}}</th>
+            <th scope="row">{{a.skill_name}}</th>
+            <th scope="row">{{a.points}}</th>
+            <th scope="row">
+              <button class="btn btn-outline btn-info">More Info</button>
+            </th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  {% endblock %}
